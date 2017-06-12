@@ -6,6 +6,7 @@ Description : 日期处理
 Time        : 2017.05.04
 Illustration: 
 '''
+import time
 import datetime
 import calendar
 
@@ -55,6 +56,7 @@ def check_week_month(date, mw, num=3):
         if date[6:8] == str(calendar.monthrange(int(date[:4]), int(date[4:6]))[1]):
             return True
     if mw.upper() == 'W':
+        # 0代表周一
         if num - 1 == datetime.datetime.strptime(date, '%Y%m%d').weekday():
             return True
 
@@ -70,3 +72,12 @@ def get_date(date, date_format_before='%Y%m%d'):
     month = datetime.datetime.strptime(date, date_format_before).month
     day = datetime.datetime.strptime(date, date_format_before).day
     return year, month, day
+
+
+def get_tamp(stmp, date_format_after='%Y-%m-%d'):
+    # 将时间戳转化为指定格式的日期 - 可自选一种方法return
+    # get_tamp(1486228605.59) -> '2017-02-05 01:16:45'
+    # 方法一
+    return time.strftime(date_format_after, time.localtime(stmp))
+    # 方法二
+    return datetime.datetime.fromtimestamp(stmp).strftime(date_format_after)
